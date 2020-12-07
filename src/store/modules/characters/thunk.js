@@ -16,12 +16,18 @@ export const getCharacterThunk = (url) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const findCharacterThunk = (url, setShowImage) => (dispatch) => {
+export const findCharacterThunk = (url, setShowImage, setErrorMsg) => (
+  dispatch
+) => {
   axios
     .get(url)
     .then((res) => {
       dispatch(findCharacter(res.data.forms || res.data.results));
       setShowImage(true);
+      setErrorMsg(false);
     })
-    .catch(() => setShowImage(false));
+    .catch(() => {
+      setShowImage(false);
+      setErrorMsg(true);
+    });
 };

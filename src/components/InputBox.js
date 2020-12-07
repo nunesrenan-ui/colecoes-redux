@@ -12,6 +12,7 @@ const InputBox = () => {
   const location = useLocation();
   const [inputName, setInputName] = useState("");
   const [showImage, setShowImage] = useState(false);
+  const [errorMesage, setErrorMsg] = useState(false);
 
   const handleInputName = (e) => {
     setInputName(e.target.value);
@@ -25,7 +26,7 @@ const InputBox = () => {
     if (location.pathname === "/poke") {
       url = `https://pokeapi.co/api/v2/pokemon/${inputName}`;
     }
-    dispatch(findCharacterThunk(url, setShowImage));
+    dispatch(findCharacterThunk(url, setShowImage, setErrorMsg));
     setInputName("");
   };
 
@@ -46,6 +47,7 @@ const InputBox = () => {
           </span>
         </CardMap>
       )}
+      {errorMesage && <span style={{ color: "red" }}>Character not foud!</span>}
     </>
   );
 };
